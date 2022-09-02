@@ -2,9 +2,16 @@ const mineflayer = require("mineflayer")
 const { Vec3 } = require("vec3")
 const { reportArea, reportBlockNames } = require("./minecraft.json");
 
+let bot
+
+var blocksBreaking = {}
 
 var lastWhisperTime = 0
 var lastReportTime = 0
+
+const welcome = () => {
+    bot.chat("I\'m watching you!")
+}
 
 function isInReportArea(position) {
     console.log
@@ -12,16 +19,6 @@ function isInReportArea(position) {
         position.y >= reportArea.start.y && position.y <= reportArea.end.y &&
         position.z >= reportArea.start.z && position.z <= reportArea.end.z
 }
-
-const bot = mineflayer.createBot({ host: "localhost", port: 25565 })
-
-console.log("Bot started")
-
-const welcome = () => {
-    bot.chat("I\'m watching you!")
-}
-
-var blocksBreaking = {}
 
 const logBreaking = (block, destroyStage, entity) => {
 
@@ -49,6 +46,16 @@ const checkBlock = (oldBlock, newBlock) => {
     }
 }
 
-bot.once("spawn", welcome)
-bot.on("blockBreakProgressObserved", logBreaking)
-bot.on("blockUpdate", checkBlock)
+const connect = () => {
+    const instance = mineflayer.createBot({ host: "localhost", port: 25565 })
+
+    instance.once("spawn", welcome)
+    instance.on("blockBreakProgressObserved", logBreaking)
+    instance.on("blockUpdate", checkBlock)
+
+    // reconnect if the bot disconnects
+    instance.once("end", () => setTimeout(connect, 5e3))
+    return (bot = instance)
+}
+
+connect()
