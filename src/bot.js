@@ -3,7 +3,8 @@ const { Vec3 } = require("vec3")
 const { reportArea, reportBlockNames } = require("./minecraft.json");
 
 
-var lastMessageTime = 0
+var lastWhisperTime = 0
+var lastReportTime = 0
 
 function isInReportArea(position) {
     console.log
@@ -17,7 +18,7 @@ const bot = mineflayer.createBot({ host: "localhost", port: 25565 })
 console.log("Bot started")
 
 const welcome = () => {
-    bot.chat("I'm watching you!")
+    bot.chat("I\'m watching you!")
 }
 
 var blocksBreaking = {}
@@ -27,17 +28,23 @@ const logBreaking = (block, destroyStage, entity) => {
     if (isInReportArea(block.position) && reportBlockNames.includes(block.name)) {
         if (blocksBreaking[block.position] != entity.username) { // 
             blocksBreaking[block.position] = entity.username
-            if (lastMessageTime + 500 < Date.now()) {
+            if (lastWhisperTime + 500 < Date.now()) {
                 bot.whisper(entity.username, "Stop trying to break the beacon!")
+                lastWhisperTime = Date.now()
+
             }
-            lastMessageTime = Date.now()
         }
     }
 }
 
 const checkBlock = (oldBlock, newBlock) => {
     if (blocksBreaking[oldBlock.position] && newBlock.name == "air") {
-        bot.chat(`${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
+        if (lastReportTime + 500 < Date.now()) {
+            bot.chat(`${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
+            lastReportTime = Date.now()
+
+        }
+
         delete blocksBreaking[oldBlock.position]
     }
 }
