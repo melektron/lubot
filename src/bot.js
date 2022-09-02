@@ -1,6 +1,6 @@
 const mineflayer = require("mineflayer")
 const { Vec3 } = require("vec3")
-const { reportArea, reportBlockNames } = require("./minecraft.json");
+const { reportArea, reportBlockNames, connectionData } = require("./minecraft.json");
 
 let bot
 
@@ -47,7 +47,7 @@ const checkBlock = (oldBlock, newBlock) => {
 }
 
 const connect = () => {
-    const instance = mineflayer.createBot({ host: "localhost", port: 25565 })
+    const instance = mineflayer.createBot(connectionData)
 
     instance.once("spawn", welcome)
     instance.on("blockBreakProgressObserved", logBreaking)
