@@ -4,7 +4,7 @@ code for connecting to discord
 
 
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
-const { token, botid } = require("./token.json");
+const { token, botid } = require("./secrets.json");
 
 
 let client

@@ -1,6 +1,7 @@
 const mineflayer = require("mineflayer")
 const { Vec3 } = require("vec3")
-const { reportArea, reportBlockNames, connectionData } = require("./minecraft.json");
+const { reportArea, reportBlockNames } = require("./minecraft.json");
+const { connectionData } = require("./secrets.json")
 const { sendMessage } = require("./dc.js")
 
 let bot
