@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/melektron/lubot/issues"
   },
-  "homepage": "https://github.com/melektron/lubot#readme"
+  "homepage": "https://github.com/melektron/lubot#readme",
+  "dependencies": {
+    "discord.js": "^14.3.0"
+  }
 }
