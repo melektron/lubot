@@ -1,6 +1,7 @@
 const mineflayer = require("mineflayer")
 const { Vec3 } = require("vec3")
 const { reportArea, reportBlockNames, connectionData } = require("./minecraft.json");
+const { sendMessage } = require("./dc.js")
 
 let bot
 
@@ -11,6 +12,7 @@ let lastReportTime = 0
 
 const welcome = () => {
     bot.chat("I\'m watching you!")
+    sendMessage("I'm watching you!")
 }
 
 function isInReportArea(position) {
@@ -38,6 +40,7 @@ const checkBlock = (oldBlock, newBlock) => {
     if (blocksBreaking[oldBlock.position] && newBlock.name == "air") {
         if (lastReportTime + 500 < Date.now()) {
             bot.chat(`${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
+            sendMessage(`@everyone ${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
             lastReportTime = Date.now()
 
         }

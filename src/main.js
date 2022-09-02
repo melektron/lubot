@@ -11,5 +11,4 @@ const { connect } = require("./bot.js")
 
 
 connect();
-console.log("done");
-//run();
+run();
