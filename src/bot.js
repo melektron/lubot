@@ -4,10 +4,10 @@ const { reportArea, reportBlockNames, connectionData } = require("./minecraft.js
 
 let bot
 
-var blocksBreaking = {}
+let blocksBreaking = {}
 
-var lastWhisperTime = 0
-var lastReportTime = 0
+let lastWhisperTime = 0
+let lastReportTime = 0
 
 const welcome = () => {
     bot.chat("I\'m watching you!")
