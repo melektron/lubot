@@ -3,7 +3,7 @@ code for connecting to discord
 */
 
 
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const { token, botid } = require("./token.json");
 
 
@@ -21,8 +21,8 @@ const run = () => {
     });
 
     // When the client is ready, run this code (only once)
-    client.once('ready', () => {
-        console.log('Ready!');
+    client.once("ready", () => {
+        console.log("Ready!");
 
         channel = client.channels.cache.get("1015394508554371103");
         channel.send("Hello, World!");

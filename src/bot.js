@@ -58,4 +58,4 @@ const connect = () => {
     return (bot = instance)
 }
 
-connect()
+exports.connect = connect
