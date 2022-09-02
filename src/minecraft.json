@@ -1,0 +1,29 @@
+{
+    "reportArea": {
+        "start": {
+            "x": 136,
+            "y": -59,
+            "z": -65
+        },
+        "end": {
+            "x": 152,
+            "y": -51,
+            "z": -56
+        }
+    },
+    "reportBlockNames": [
+        "emerald_block",
+        "beacon",
+        "obsidian",
+        "spruce_sign",
+        "pink_stained_glass",
+        "light_blue_stained_glass",
+        "white_stained_glass"
+    ],
+    "connectionData": {
+        "host": "localhost",
+        "port": 25565,
+        "username": "Player",
+        "password": "password"
+    }
+}
