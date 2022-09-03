@@ -7,6 +7,8 @@ www.elektron.work
 */
 
 const { run } = require("./dc.js");
+const { connect } = require("./bot.js")
 
 
+connect();
 run();
