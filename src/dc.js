@@ -3,13 +3,11 @@ code for connecting to discord
 */
 
 
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
-const { token, botid } = require("./secrets.json");
-
+const { Client, GatewayIntentBits, Partials } = require("discord.js")
+const { token, botid, outputChannels, inputChannels } = require("./secrets.json")
 
 let client
-let channel
-
+let channels = []
 
 const run = () => {
     // Create a new client instance
@@ -18,29 +16,36 @@ const run = () => {
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMessages
         ]
-    });
+    })
 
-    // When the client is ready, run this code (only once)
+    // When the client is ready, get the channel id to post 
     client.once("ready", () => {
-        console.log("Ready!");
-
-        channel = client.channels.cache.get("1015394508554371103");
-        channel.send("Hello, World!");
-    });
+        console.log("Discord ready!")
+        
+        // resolve all output channels
+        outputChannels.forEach(channel_id => {
+            const channel = client.channels.cache.get(channel_id)
+            if (channel != undefined)
+                channels.push(channel)
+        })
+    })
 
     client.on("messageCreate", (message) => {
-        if (message.author.id === botid) return;
+        // ignore messages sent by the bot itself
+        if (message.author.id === botid) return
+        if (!inputChannels.includes(message.channelId)) return
 
-        console.log(message);
-    });
+        console.log("Discord message: ", message.content)
+    })
 
     // Login to Discord with your client's token
-    client.login(token);
+    client.login(token)
 }
 
 const sendMessage = (text) => {
-    channel.send(text);
+    // send message to all output channels
+    channels.forEach(channel => channel.send(text))
 }
 
-exports.run = run;
-exports.sendMessage = sendMessage;
+exports.run = run
+exports.sendMessage = sendMessage
