@@ -16,11 +16,9 @@ npm install
 ```
 in the project root directory to install node packages.
 
-<br>
-
 ### Configuration
 
-Create src/secrets.json with contents
+Create src/secrets.json with contents:
 ```json
 {
     "token": "...",
@@ -36,7 +34,7 @@ Create src/secrets.json with contents
         "port": 25565,
         "username": "Player",
         "password": "password",
-        "auth": "..."
+        "auth": "microsoft"
     }
 }
 ```
@@ -53,7 +51,7 @@ When logging in to a server in offline mode, any username can be chosen and the 
 
 When logging in using a Microsoft account the username has to be your Microsoft account email and the password the Microsoft account password. The optional __```"auth"```__ field also has to have the value __```"microsoft"```__, otherwise it will try to log in using a mojang account.
 
-When logging in using a Mojang or Legacy account, the username has to be your account email or player name and the password your Mojang account password.
+When logging in using a Mojang or Legacy account, the username has to be your account email or player name and the password your Mojang account password. The __```"auth"```__ field has to be empty or set to __```"mojang"```__. (Also you should migrate your account)
 
 ## Running
 
