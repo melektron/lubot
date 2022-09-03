@@ -58,7 +58,7 @@ const checkBlock = (oldBlock, newBlock) => {
                 let possibleBreakers = []
                 for (const playerKey in bot.players) {
                     const player = bot.players[playerKey]
-                    if (player.entity !== undefined && player.entity.position.distanceTo(oldBlock.position) < 7) { // 7 to make sure we always get the player
+                    if (player.entity !== undefined && player.entity !== null && player.entity.position.distanceTo(oldBlock.position) < 7) { // 7 to make sure we always get the player
                         possibleBreakers.push(player.username)
                     }
                 }
