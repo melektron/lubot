@@ -23,9 +23,9 @@ function isInReportArea(position) {
     const higher_x = Math.max(reportArea.start.x, reportArea.end.x)
     const higher_y = Math.max(reportArea.start.y, reportArea.end.y)
     const higher_z = Math.max(reportArea.start.z, reportArea.end.z)
-    return  position.x >= lower_x && position.x <= higher_x && 
-            position.y >= lower_y && position.y <= higher_y && 
-            position.z >= lower_z && position.z <= higher_z
+    return position.x >= lower_x && position.x <= higher_x &&
+        position.y >= lower_y && position.y <= higher_y &&
+        position.z >= lower_z && position.z <= higher_z
 }
 
 const logBreaking = (block, destroyStage, entity) => {
@@ -42,14 +42,37 @@ const logBreaking = (block, destroyStage, entity) => {
 }
 
 const checkBlock = (oldBlock, newBlock) => {
-    if (blocksBreaking[oldBlock.position] && newBlock.name == "air") {
-        if (lastReportTime + 500 < Date.now()) {
-            bot.chat(`${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
-            sendMessage(`@everyone ${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
-            lastReportTime = Date.now()
-        }
+    if (newBlock.name == "air") {
+        if (blocksBreaking[oldBlock.position]) {
+            if (lastReportTime + 500 < Date.now()) {
+                bot.chat(`${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
+                sendMessage(`@everyone ${blocksBreaking[oldBlock.position]} broke ${oldBlock.displayName} at the beacon!`)
+                lastReportTime = Date.now()
+            }
 
-        delete blocksBreaking[oldBlock.position]
+            delete blocksBreaking[oldBlock.position]
+        } else {
+            // Block breaking animation is not sent over 32 blocks away, so we can't detect it with logBreaking
+            // This method checks by distance
+            if (isInReportArea(oldBlock.position) && reportBlockNames.includes(oldBlock.name)) {
+                let possibleBreakers = []
+                for (const playerKey in bot.players) {
+                    const player = bot.players[playerKey]
+                    if (player.entity !== undefined && player.entity !== null && player.entity.position.distanceTo(oldBlock.position) < 7) { // 7 to make sure we always get the player
+                        possibleBreakers.push(player.username)
+                    }
+                }
+                if (possibleBreakers.length > 0) {
+                    if (lastReportTime + 500 < Date.now()) {
+                        bot.chat(`${possibleBreakers.join(" or ")} broke ${oldBlock.displayName} at the beacon!`)
+                        sendMessage(`@everyone ${possibleBreakers.join(", ")} broke ${oldBlock.displayName} at the beacon!`)
+                        lastReportTime = Date.now()
+                    }
+                } else {
+                    sendMessage(`@everyone ${oldBlock.displayName} was broken at ${oldBlock.position}, but I don't know who did it :(`)
+                }
+            }
+        }
     }
 }
 
