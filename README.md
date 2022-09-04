@@ -35,7 +35,8 @@ Create src/secrets.json with contents:
         "username": "Player",
         "password": "password",
         "auth": "microsoft"
-    }
+    },
+    "viewerPort": 3000
 }
 ```
 
