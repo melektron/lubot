@@ -24,7 +24,6 @@
   "dependencies": {
     "discord.js": "^14.3.0",
     "mineflayer": "^4.4.0",
-    "node-canvas-webgl": "^0.2.7",
     "prismarine-viewer": "^1.23.0"
   }
 }
