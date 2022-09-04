@@ -23,6 +23,7 @@
   "homepage": "https://github.com/melektron/lubot#readme",
   "dependencies": {
     "discord.js": "^14.3.0",
-    "mineflayer": "^4.4.0"
+    "mineflayer": "^4.4.0",
+    "prismarine-viewer": "^1.23.0"
   }
 }
