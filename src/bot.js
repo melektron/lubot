@@ -74,17 +74,18 @@ const checkBlock = (oldBlock, newBlock) => {
                     if (lastReportTime + 500 < Date.now()) {
                         // only send mc chat message when no friend was nearby
                         if (publicReport) sendChatMessage(`${possibleBreakers.join(" or ")} broke ${oldBlock.displayName} at the beacon!`)
-                        
+
                         // allways send discord chat messages
                         sendDiscordMessage(`@break Someone broke ${oldBlock.displayName} ${oldBlock.position} at the beacon!`)
                         // print more detailed information on discord
                         let playerPositions = ""
                         playerPositions = possibleBreakers.reduce((output, currentPlayerKey) => {
                             const currentPlayer = bot.players[currentPlayerKey]
-                            return output + `     - ${currentPlayer.username} ${friends.includes(currentPlayer.username) ? "(friend)" : ""}: (${currentPlayer.entity.position.x.toFixed(0)}, ${currentPlayer.entity.position.y.toFixed(0)}, ${currentPlayer.entity.position.z.toFixed(0)}\t Δ${currentPlayer.entity.position.distanceTo(oldBlock.position).toFixed(0)})\n`
+                            const pos = currentPlayer.entity.position
+                            return output + `     - ${currentPlayer.username} ${friends.includes(currentPlayer.username) ? "(friend)" : ""}: (${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}\t Δ${pos.distanceTo(oldBlock.position).toFixed(0)})\n`
                         }, playerPositions)
                         sendDiscordMessage("It was probably one of the following players:\n" + playerPositions)
-                        
+
                         lastReportTime = Date.now()
                     }
                 } else {
@@ -93,7 +94,8 @@ const checkBlock = (oldBlock, newBlock) => {
                     playerPositions = Object.keys(bot.players).reduce((output, currentPlayerKey) => {
                         const currentPlayer = bot.players[currentPlayerKey]
                         if (currentPlayer.entity == null) return output    // ignore players that are out of view distance
-                        return output + `     - ${currentPlayer.username} ${friends.includes(currentPlayer.username) ? "(friend)" : ""}: (${currentPlayer.entity.position.x.toFixed(0)}, ${currentPlayer.entity.position.y.toFixed(0)}, ${currentPlayer.entity.position.z.toFixed(0)}\t Δ${currentPlayer.entity.position.distanceTo(oldBlock.position).toFixed(0)})\n`
+                        const pos = currentPlayer.entity.position
+                        return output + `     - ${currentPlayer.username} ${friends.includes(currentPlayer.username) ? "(friend)" : ""}: (${pos.x.toFixed(0)}, ${pos.y.toFixed(0)}, ${pos.z.toFixed(0)}\t Δ${pos.distanceTo(oldBlock.position).toFixed(0)})\n`
                     }, playerPositions)
                     sendDiscordMessage(`@break ${oldBlock.displayName} was broken at ${oldBlock.position}, but I don't know who did it :(`)
                     sendDiscordMessage("Possible players:\n" + playerPositions)
