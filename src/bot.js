@@ -1,8 +1,9 @@
 const mineflayer = require("mineflayer")
 const { Vec3 } = require("vec3")
 const { reportArea, reportBlockNames, friends, sendPublicMCMessages, playerAssosiationRadius } = require("./minecraft.json");
-const { connectionData } = require("./secrets.json")
+const { connectionData, viewerPort } = require("./secrets.json")
 const { sendDiscordMessage } = require("./dc.js")
+const mineflayerViewer = require('prismarine-viewer').mineflayer
 
 let bot
 
@@ -17,6 +18,7 @@ const sendChatMessage = (text) => {
 }
 
 const welcome = () => {
+    mineflayerViewer(bot, { port: viewerPort }) 
     sendChatMessage("I\'m watching you!")
     sendDiscordMessage("I'm watching the server!")
 }

@@ -5,6 +5,7 @@ A bot to monitor LiveOverflow's minecraft server using discord.
 ## Current Features
  - beacon monitor 
    - mining alerts
+ - view the server world [from a browser](https://github.com/PrismarineJS/prismarine-viewer).  
 
 ## Setup
 
@@ -35,7 +36,8 @@ Create src/secrets.json with contents:
         "username": "Player",
         "password": "password",
         "auth": "microsoft"
-    }
+    },
+    "viewerPort": 3000
 }
 ```
 
