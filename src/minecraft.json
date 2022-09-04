@@ -19,5 +19,11 @@
         "pink_stained_glass",
         "light_blue_stained_glass",
         "white_stained_glass"
-    ]
+    ],
+    "friends": [
+        "DarkMetalMouse",
+        "ElektronMC"
+    ],
+    "sendPublicMCMessages": true,
+    "playerAssosiationRadius": 7
 }

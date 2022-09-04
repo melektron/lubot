@@ -42,10 +42,10 @@ const run = () => {
     client.login(token)
 }
 
-const sendMessage = (text) => {
+const sendDiscordMessage = (text) => {
     // send message to all output channels
     channels.forEach(channel => channel.send(text))
 }
 
 exports.run = run
-exports.sendMessage = sendMessage
+exports.sendDiscordMessage = sendDiscordMessage
