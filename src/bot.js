@@ -108,6 +108,14 @@ const checkBlock = (oldBlock, newBlock) => {
 }
 
 const connect = () => {
+
+    // close existing viewer instance if the bot reconnects to avoid EADDRINUSE
+    if (bot != null) {
+        if (bot.viewer != null) {
+            bot.viewer.close()
+        }
+    }
+
     const instance = mineflayer.createBot(connectionData)
 
     instance.once("spawn", welcome)
