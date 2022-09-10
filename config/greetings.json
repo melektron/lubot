@@ -7,13 +7,14 @@
         ]
     },
     "playerJoinGreetings": {
-        "ElektronMC": [
+        "ElektronM": [
             "player test greeting 1",
             "player test greeting 2",
             "player test greeting 3"
         ]
     },
     "selfJoinMessages": [
-        "I'm watching you!"
+        "I'm watching you!",
+        "I'm watching you, 2!"
     ]
 }
