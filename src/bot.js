@@ -4,6 +4,7 @@ const { reportArea, reportBlockNames, friends, sendPublicMCMessages, playerAssos
 const { connectionData, viewerPort } = require("./secrets.json")
 const { sendDiscordMessage } = require("./dc.js")
 const mineflayerViewer = require('prismarine-viewer').mineflayer
+const { logEffectStart, logEffectEnd } = require("./effectLogger.js")
 
 let bot
 
@@ -109,6 +110,10 @@ const checkBlock = (oldBlock, newBlock) => {
     }
 }
 
+const logEffect = (entity, effect) => {
+    console.log(entity.username, effect);
+}
+
 const connect = () => {
 
     // close existing viewer instance if the bot reconnects to avoid EADDRINUSE
@@ -123,6 +128,8 @@ const connect = () => {
     instance.once("spawn", welcome)
     instance.on("blockBreakProgressObserved", logBreaking)
     instance.on("blockUpdate", checkBlock)
+    instance.on("entityEffect", logEffectStart)
+    instance.on("entityEffectEnd", logEffectEnd)
 
     // reconnect if the bot disconnects
     instance.once("end", () => setTimeout(connect, 5e3))
@@ -130,3 +137,4 @@ const connect = () => {
 }
 
 exports.connect = connect
+exports.bot = bot
