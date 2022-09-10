@@ -6,6 +6,7 @@ const { selfJoinGreetings, playerJoinGreetings, selfJoinMessages } = require("..
 
 // to select random array entry
 function randomSample(array) {
+    if (array.length === 0) return undefined;
     return array[Math.floor(Math.random() * array.length)]
 }
 
@@ -18,18 +19,21 @@ const onPlayerJoin = (player, inJoinPhase, chatFunction) => {
     // when the bot has joined, send selfJoinGreetings
     if (inJoinPhase) {
         if (selfJoinGreetings[player.username] != null) {
-            chatFunction(randomSample(selfJoinGreetings[player.username]));
+            const message = randomSample(selfJoinGreetings[player.username])
+            if (message != null) chatFunction(message)
         }
     } else {
         if (playerJoinGreetings[player.username] != null) {
-            chatFunction(randomSample(playerJoinGreetings[player.username]));
+            const message = randomSample(playerJoinGreetings[player.username])
+            if (message != null) chatFunction(message)
         }
     }
 }
 
 // gets called when the bot joins
 const onSelfJoin = (chatFunction) => {
-    chatFunction(randomSample(selfJoinMessages))
+    const message = randomSample(selfJoinMessages)
+    if (message != null) chatFunction(message)
 }
 
 exports.onPlayerJoin = onPlayerJoin

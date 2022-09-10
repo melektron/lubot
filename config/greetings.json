@@ -1,20 +1,20 @@
 {
     "selfJoinGreetings": {
-        "ElektronMC": [
-            "self test greeting 1",
-            "self test greeting 2",
-            "self test greeting 3"
+        "LiveOverflow": [
+            "Oh, high LiveOverflow!",
+            "Hello LiveOverflow",
+            "Yo, LiveOverflow nice to see you!"
         ]
     },
     "playerJoinGreetings": {
-        "ElektronM": [
-            "player test greeting 1",
-            "player test greeting 2",
-            "player test greeting 3"
+        "LiveOverflow": [
+            "Welcome LiveOverflow!",
+            "welcome liveoverflow",
+            "Welcome back liveoverflow",
+            "Hi live!",
+            "Hello Live",
+            "Yo, welcome back live!"
         ]
     },
-    "selfJoinMessages": [
-        "I'm watching you!",
-        "I'm watching you, 2!"
-    ]
+    "selfJoinMessages": []
 }
