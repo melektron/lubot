@@ -36,6 +36,7 @@ function isInReportArea(position) {
 }
 
 const logBreaking = (block, destroyStage, entity) => {
+    if (block == null || entity == null) return
     if (isInReportArea(block.position) && reportBlockNames.includes(block.name)) {
         if (blocksBreaking[block.position] != entity.username) {
             blocksBreaking[block.position] = entity.username
@@ -49,6 +50,7 @@ const logBreaking = (block, destroyStage, entity) => {
 }
 
 const checkBlock = (oldBlock, newBlock) => {
+    if (oldBlock == null || newBlock == null) return
     if (newBlock.name == "air") {
         if (blocksBreaking[oldBlock.position]) {
             if (lastReportTime + 500 < Date.now()) {
