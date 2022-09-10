@@ -12,6 +12,9 @@ let blocksBreaking = {}
 let lastWhisperTime = 0
 let lastReportTime = 0
 
+// true while the bot in the process of joining a server, false once it is logged in
+let joinPhaseFlag = true;
+
 const sendChatMessage = (text) => {
     if (!sendPublicMCMessages) return
     bot?.chat(text);
@@ -118,6 +121,8 @@ const connect = () => {
         }
     }
 
+    // start login procedure
+    joinPhaseFlag = true;
     const instance = mineflayer.createBot(connectionData)
 
     instance.once("spawn", welcome)
@@ -129,4 +134,6 @@ const connect = () => {
     return (bot = instance)
 }
 
+
+exports.getLoginPhaseFlag = () => joinPhaseFlag
 exports.connect = connect
