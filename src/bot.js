@@ -1,9 +1,17 @@
+/*
+code for interacting with minecraft
+*/
+
 const mineflayer = require("mineflayer")
-const { Vec3 } = require("vec3")
+const mineflayerViewer = require('prismarine-viewer').mineflayer
+
+const { sendDiscordMessage } = require("./dc.js")
+const { onPlayerJoin, onSelfJoin } = require("./greetings.js")
+
 const { reportArea, reportBlockNames, friends, sendPublicMCMessages, playerAssosiationRadius } = require("./minecraft.json");
 const { connectionData, viewerPort } = require("./secrets.json")
-const { sendDiscordMessage } = require("./dc.js")
-const mineflayerViewer = require('prismarine-viewer').mineflayer
+
+
 
 let bot
 
@@ -12,15 +20,19 @@ let blocksBreaking = {}
 let lastWhisperTime = 0
 let lastReportTime = 0
 
+// true while the bot in the process of joining a server, false once it is logged in
+let joinPhaseFlag = true;
+
 const sendChatMessage = (text) => {
     if (!sendPublicMCMessages) return
     bot?.chat(text);
 }
 
 const welcome = () => {
-    mineflayerViewer(bot, { port: viewerPort }) 
-    sendChatMessage("I\'m watching you!")
+    mineflayerViewer(bot, { port: viewerPort })
+    onSelfJoin(sendChatMessage)
     sendDiscordMessage("I'm watching the server!")
+    setTimeout(() => joinPhaseFlag = false, 1000)   // wait 1 sec before marking as "logged in"
 }
 
 function isInReportArea(position) {
@@ -118,15 +130,19 @@ const connect = () => {
         }
     }
 
+    // start login procedure
+    joinPhaseFlag = true
     const instance = mineflayer.createBot(connectionData)
 
     instance.once("spawn", welcome)
     instance.on("blockBreakProgressObserved", logBreaking)
     instance.on("blockUpdate", checkBlock)
+    instance.on("playerJoined", (player) => onPlayerJoin(player, joinPhaseFlag, sendChatMessage))
 
     // reconnect if the bot disconnects
     instance.once("end", () => setTimeout(connect, 5e3))
     return (bot = instance)
 }
+
 
 exports.connect = connect

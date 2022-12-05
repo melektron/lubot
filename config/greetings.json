@@ -1,0 +1,20 @@
+{
+    "selfJoinGreetings": {
+        "LiveOverflow": [
+            "Oh, high LiveOverflow!",
+            "Hello LiveOverflow",
+            "Yo, LiveOverflow nice to see you!"
+        ]
+    },
+    "playerJoinGreetings": {
+        "LiveOverflow": [
+            "Welcome LiveOverflow!",
+            "welcome liveoverflow",
+            "Welcome back liveoverflow",
+            "Hi live!",
+            "Hello Live",
+            "Yo, welcome back live!"
+        ]
+    },
+    "selfJoinMessages": []
+}
